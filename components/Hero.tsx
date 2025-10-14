@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import heroImage from '/Gemini_Generated_Image_ioo3spioo3spioo3.png';
 
 interface HeroProps {
   onCtaClick: () => void;
@@ -61,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
             {/* User Image in the Center */}
             <div className="relative w-[55%] h-[55%] rounded-full overflow-hidden">
                 <img 
-                    src={heroImage} 
+                    src="/hero-image.png" 
                     alt="Blog Professional Hub" 
                     className="w-full h-full object-cover animate-float"
                 />

@@ -31,7 +31,7 @@ const Expert: React.FC = () => {
           <div className="aspect-square bg-gray-700 rounded-lg p-2 border border-red-500/20 shadow-[0_0_20px_rgba(255,0,51,0.2)]">
             <div 
                 className="w-full h-full bg-cover bg-center rounded" 
-                style={{backgroundImage: `url('/Captura de Tela 2025-10-13 às 20.57.34.png')`}}
+                style={{backgroundImage: `url('/expert-image.png')`}}
             >
             </div>
           </div>

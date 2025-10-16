@@ -104,7 +104,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         {status === 'success' && (
             <div className="text-center space-y-4">
                 <h2 className="text-2xl font-black tracking-widest text-green-400">[TRANSMISSÃO CONCLUÍDA]</h2>
-                <p className="text-[#B3B3B3]">Obrigado por se inscrever!</p>
+        <p className="mb-4">Sua inscrição foi confirmada.</p>
+        <p className="mb-4">O link para a aula será enviado para o seu e-mail.</p>
                 <p className="text-[#B3B3B3]">Siga-nos no Instagram e YouTube:</p>
                 <div className="flex justify-center space-x-4">
                     <a href="https://www.instagram.com/brunomedeiroseo/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FF0033] transition-colors">

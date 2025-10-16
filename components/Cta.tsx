@@ -22,7 +22,7 @@ const Cta: React.FC<CtaProps> = ({ onCtaClick }) => {
     <section ref={ref} className="py-24 text-center">
       <div className={`space-y-8 transition-all duration-700 ${isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         <h2 className="text-4xl md:text-5xl font-black max-w-4xl mx-auto leading-tight">Pronto Para Construir o Blog Profissional Que Gera Receita no Piloto Automático?</h2>
-        <CtaButton onClick={onCtaClick}>LIBERAR MINHA UNIDADE DE TREINAMENTO</CtaButton>
+        <CtaButton onClick={onCtaClick}>QUERO COMEÇAR AGORA</CtaButton>
       </div>
     </section>
   );

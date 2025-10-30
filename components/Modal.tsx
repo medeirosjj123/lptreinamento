@@ -12,6 +12,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [utmParams, setUtmParams] = useState({ utm_source: '', utm_medium: '', utm_campaign: '' });
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setUtmParams({
+      utm_source: urlParams.get('utm_source') || '',
+      utm_medium: urlParams.get('utm_medium') || '',
+      utm_campaign: urlParams.get('utm_campaign') || ''
+    });
+  }, []);
+
   const WEBHOOK_URL_PROD = 'https://n8n.smarthat.com.br/webhook/46047ca3-9fe2-4969-a4e8-d29d596d91ca';
   const WEBHOOK_URL_TEST = 'https://n8n.smarthat.com.br/webhook-test/46047ca3-9fe2-4969-a4e8-d29d596d91ca';
   const WEBHOOK_URL_CRM = 'https://crm.prbn.dev.br/webhooks/workflows/45827b74-e4dd-4d19-a0ec-7f25af53566c/b5304b42-4ae9-41a4-a066-d1fab9d20806';
@@ -32,23 +43,33 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     setStatus('submitting');
 
-    const payload = { name, email, whatsapp };
+    const payload = { name, email, whatsapp, ...utmParams };
+    const crmPayload = {
+      "Nome": name,
+      "E-mail": email,
+      "WhatsApp": whatsapp,
+      ...utmParams
+    };
 
-    const sendWebhook = (url: string) => {
+    const sendWebhook = (url: string, body: any) => {
         return fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
+            body: JSON.stringify(body),
         });
     };
 
     try {
-      const responses = await Promise.all([
-          sendWebhook(WEBHOOK_URL_PROD),
-          sendWebhook(WEBHOOK_URL_CRM)
+      const responses = await Promise.allSettled([
+          sendWebhook(WEBHOOK_URL_PROD, payload),
+          sendWebhook(WEBHOOK_URL_CRM, crmPayload)
       ]);
 
-      if (responses.every(res => res.ok)) {
+      console.log('Webhook responses:', responses);
+
+      const allSucceeded = responses.every(res => res.status === 'fulfilled' && res.value.ok);
+
+      if (allSucceeded) {
         setStatus('success');
       } else {
         setStatus('error');

@@ -14,6 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const WEBHOOK_URL_PROD = 'https://n8n.smarthat.com.br/webhook/46047ca3-9fe2-4969-a4e8-d29d596d91ca';
   const WEBHOOK_URL_TEST = 'https://n8n.smarthat.com.br/webhook-test/46047ca3-9fe2-4969-a4e8-d29d596d91ca';
+  const WEBHOOK_URL_CRM = 'https://crm.prbn.dev.br/webhooks/workflows/45827b74-e4dd-4d19-a0ec-7f25af53566c/b5304b42-4ae9-41a4-a066-d1fab9d20806';
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -43,7 +44,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     try {
       const responses = await Promise.all([
-          sendWebhook(WEBHOOK_URL_PROD)
+          sendWebhook(WEBHOOK_URL_PROD),
+          sendWebhook(WEBHOOK_URL_CRM)
       ]);
 
       if (responses.every(res => res.ok)) {
